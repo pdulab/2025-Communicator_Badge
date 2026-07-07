@@ -20,6 +20,9 @@ class Page:
                  content_style = styles.content_style,
                  menubar_style = styles.menubar_style,
                  infobar_style = styles.infobar_style,
+                 button_style = styles.button_style,
+                 textbox_style = styles.textbox_style,
+                 cursor_style = styles.cursor_style,
                  lcd_color_bg = styles.lcd_color_bg,
                  lcd_color_fg = styles.lcd_color_fg):
         
@@ -27,6 +30,9 @@ class Page:
         self.content_style = content_style
         self.menubar_style = menubar_style
         self.infobar_style = infobar_style
+        self.button_style = button_style
+        self.textbox_style = textbox_style
+        self.cursor_style = cursor_style
         self.lcd_color_bg = lcd_color_bg
         self.lcd_color_fg = lcd_color_fg
         
@@ -113,16 +119,13 @@ class Page:
     def create_text_box(self, default_text="", one_line=False, char_limit=0):
 
         self.text_box = lvgl.textarea(self.content)
-        self.text_box.add_style(self.infobar_style, 0)
+        self.text_box.add_style(self.textbox_style, 0)
         self.text_box.set_height(lvgl.pct(80))
         self.text_box.set_width(lvgl.pct(80))
         self.text_box.align(lvgl.ALIGN.CENTER, 0, 0)
-        self.text_box.set_style_border_width(2, 0)
-        self.text_box.set_style_pad_all(5, 0)
         self.text_box.set_text(default_text)
         self.text_box.set_one_line(one_line)
-        cursor_style = lvgl.style_t()
-        self.text_box.set_style_border_color(self.lcd_color_fg, lvgl.PART.CURSOR | lvgl.STATE.FOCUSED)
+        self.text_box.add_style(self.cursor_style, lvgl.PART.CURSOR | lvgl.STATE.FOCUSED)
         self.text_box.add_state(lvgl.STATE.FOCUSED)
 
         self.tb_char_limit = char_limit
@@ -161,7 +164,7 @@ class Page:
         self.menubar.add_style(self.menubar_style, 0)
         self.menubar_buttons = [lvgl.button(self.menubar) for x in range(5)]
         for i in range(5):
-            self.menubar_buttons[i].add_style(self.menubar_style, 0)
+            self.menubar_buttons[i].add_style(self.button_style, 0)
             self.menubar_buttons[i].set_style_text_align(lvgl.ALIGN.CENTER, 0)
             btn_label = lvgl.label(self.menubar_buttons[i])
             btn_label.set_text(menubar_labels[i])
