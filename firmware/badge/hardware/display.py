@@ -10,8 +10,10 @@ from ui import styles
 class Display:
     def __init__(self):
         # NV3007 TFT LCD 2.79"
-        self._screen = lvgl_setup.lcd_init()
-        self.backlight = board.LCD_BACKLIGHT
+        (_screen, _lcd) = lvgl_setup.lcd_init()
+        self._screen = _screen
+        self._lcd = _lcd
+        self.backlight = _lcd._backlight_pin
         self.backlight.duty(500)  ## PWM: 0-1023
 
         self.default_color = 0x0000
