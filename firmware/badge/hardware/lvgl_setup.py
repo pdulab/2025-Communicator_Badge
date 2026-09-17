@@ -78,7 +78,7 @@ def lcd_init():
     th._timer.deinit()
     asyncio.create_task(lvgl_task_handler(th))
 
-    return (lvgl.screen_active(), display)
+    return display
 
 
 
